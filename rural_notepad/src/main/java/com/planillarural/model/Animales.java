@@ -9,7 +9,7 @@ public class Animales {
     private String raza;
     private int edad;
 
-    private static int sequence = 1; // secuencia para new animal ascendente
+    private static int sequence = 1; // secuencia para nuevo animal ascendente
 
     // exepcion de numero de caravana invalido
     public Animales(int numerocaravana, CategoriaAnimal categoria, String raza, int edad) {

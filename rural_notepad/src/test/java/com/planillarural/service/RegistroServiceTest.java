@@ -26,8 +26,8 @@ class RegistroServiceTest {
     private RegistroService service;
 
     @BeforeEach
-    void setup() {
-        service = new RegistroService();
+    void setup() { //
+        service = new RegistroService(); //
     }
 
     // ============================================================
