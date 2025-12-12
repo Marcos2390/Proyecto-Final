@@ -22,14 +22,15 @@ public class RegistroService {
     public void agregarAnimal(Animales animal) {
         Animales existente = buscarAnimalPorCaravanaYEspecie(
                 animal.getNumerocaravana(),
-                animal.getCategoria());
+                animal.getCategoria()); // busca si ya existe un animal con el mismo numero de caravana y especie
 
         if (existente != null) {
             throw new IllegalArgumentException(
                     "Animal with caravan number "
                             + animal.getNumerocaravana()
                             + " already exists in species "
-                            + animal.getCategoria().getEspecieRaiz());
+                            + animal.getCategoria().getEspecieRaiz()); // valida que no se repita el numero de caravana
+                                                                       // en la misma especie
         }
 
         animales.add(animal);
@@ -40,7 +41,6 @@ public class RegistroService {
                 a.getCategoria() == categoria);
     }
 
-    // Método requerido por tests
     public boolean eliminarAnimalPorCaravana(int caravana) {
         return animales.removeIf(a -> a.getNumerocaravana() == caravana);
     }
@@ -50,22 +50,25 @@ public class RegistroService {
         return animales.stream()
                 .filter(a -> a.getNumerocaravana() == caravana)
                 .findFirst()
-                .orElse(null);
+                .orElse(null); // ACA ES LA LOGICA SIMPLE DONDE BUSCA EL ANIMAL POR NUMERO DE CARAVANA SOLO
     }
 
     public Animales buscarAnimalPorCaravanaYEspecie(int caravana, CategoriaAnimal categoria) {
-        return animales.stream()
-                .filter(a -> a.getNumerocaravana() == caravana &&
+        return animales.stream() //
+                .filter(a -> a.getNumerocaravana() == caravana && // ACA SE HACE UN FILTRO EN DONDE DEVE COINCIDIR EL
+                                                                  // NUMERO DE CARAVANA Y LA ESPECIE PARA QUE SEA UN
+                                                                  // DUPLICADO
                         a.getCategoria().getEspecieRaiz() == categoria.getEspecieRaiz())
                 .findFirst()
                 .orElse(null);
     }
 
-    public List<Animales> buscarAnimalesPorCaravana(int caravana) {
+    public List<Animales> buscarAnimalesPorCaravana(int caravana) { // busca todos los animales con el mismo numero de
+                                                                    // caravana
         List<Animales> resultado = new ArrayList<>();
         for (Animales a : animales) {
-            if (a.getNumerocaravana() == caravana) {
-                resultado.add(a);
+            if (a.getNumerocaravana() == caravana) { // si el numero de caravana coincide
+                resultado.add(a); // lo agrega a la lista de resultados
             }
         }
         return resultado;
@@ -82,7 +85,8 @@ public class RegistroService {
     public void registrarMovimiento(Movimientos mov) {
 
         if (mov.getTipo() == TipoMovimiento.SALIDA) {
-            if (buscarAnimalPorCaravana(mov.getIdAnimal()) == null) {
+            if (buscarAnimalPorCaravana(mov.getIdAnimal()) == null) { // valida que el animal exista antes de registrar
+                                                                      // una salida
                 throw new IllegalArgumentException(
                         "Cannot register EXIT. Animal with caravan number "
                                 + mov.getIdAnimal()
