@@ -1,30 +1,26 @@
 package com.planillarural.model;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import com.planillarural.service.RegistroService;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import org.junit.jupiter.api.Test;
+import com.planillarural.model.Sanidad;
 
 class SanidadTest {
 
-    private RegistroService service;
-
-    @BeforeEach
-    void setup() {
-        service = new RegistroService();
-    }
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @Test
     void registrarSanidad_creaCorrectamente() {
-        Sanidad s = new Sanidad(10, "Aftosa", "01/05/2025");
-
-        service.registrarSanidad(s);
+        Sanidad s = new Sanidad(1, "Aftosa", "01/01/2025");
 
         assertAll(
-                () -> assertEquals(1, service.listarSanidad().size()), // verifica tamaño de la lista
-                () -> assertEquals("Aftosa", service.listarSanidad().get(0).getVacuna()), // verifica vacuna
-                () -> assertEquals("01/05/2025", s.getFecha())); // verifica fecha
+                () -> assertEquals(1, s.getIdAnimal()),
+                () -> assertEquals("Aftosa", s.getVacuna()),
+                () -> assertEquals(
+                        LocalDate.parse("01/01/2025", FORMATTER),
+                        s.getFecha()));
     }
 }

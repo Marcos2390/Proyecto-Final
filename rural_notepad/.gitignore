@@ -1,21 +1,4 @@
-# Archivos de compilación
-target/
-*.class
+target/ 
+data/ 
 
-# IDEs
-.idea/
-*.iml
-*.ipr
-*.iws
-.vscode/
-
-# Archivos de logs
-*.log
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Maven
-.settings/
-.mvn/
+.vscode/ 
