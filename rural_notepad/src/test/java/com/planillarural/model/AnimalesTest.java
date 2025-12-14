@@ -1,6 +1,7 @@
 package com.planillarural.model;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;
@@ -32,6 +33,8 @@ class AnimalesTest {
     }
 
     @Test
+    @Tag("unit")
+    @Tag("smoke")
     @DisplayName("Caravana inválida lanza excepción")
     void invalidCaravanThrowsException() {
         assertThrows(IllegalArgumentException.class,

@@ -2,9 +2,12 @@ package com.planillarural.enums;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+@Tag("unit")
+@Tag("smoke")
 class MenuOptionTest {
 
     // Test parametrizado para todos los códigos válidos

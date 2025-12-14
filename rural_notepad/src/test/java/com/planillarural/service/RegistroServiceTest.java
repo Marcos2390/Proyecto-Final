@@ -2,16 +2,10 @@ package com.planillarural.service;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +15,9 @@ import com.planillarural.model.Animales;
 import com.planillarural.model.Movimientos;
 import com.planillarural.model.Sanidad;
 
-@DisplayName("RegistroService - Test Suite")
+@Tag("regression")
+@Tag("Smoke")
+@DisplayName("RegistroService - Unit Tests")
 class RegistroServiceTest {
 
     private RegistroService service;
@@ -36,8 +32,9 @@ class RegistroServiceTest {
     // ============================================================
 
     @Test
-    @Tag("unit")
-    @Order(1)
+    @Tag("smoke")
+    @Tag("regression")
+
     @DisplayName("agregarAnimal(): debe almacenar el animal correctamente")
     void agregarAnimal_loGuardaCorrectamente() {
 
@@ -46,15 +43,14 @@ class RegistroServiceTest {
 
         Animales buscado = service.buscarAnimalPorCaravana(10);
 
-        assertAll(
-                () -> assertNotNull(buscado, "El animal debería existir"),
+        assertAll(() -> assertNotNull(buscado, "El animal debería existir"),
                 () -> assertEquals(10, buscado.getNumerocaravana()),
                 () -> assertEquals("Hereford", buscado.getRaza()));
     }
 
     @Test
-    @Tag("unit")
-    @Order(2)
+    @Tag("regression")
+
     @DisplayName("eliminarAnimalPorCaravana(): debe devolver TRUE si el animal existía")
     void eliminarAnimalPorCaravana_devuelveTrueSiExiste() {
 
@@ -67,8 +63,8 @@ class RegistroServiceTest {
     }
 
     @Test
-    @Tag("unit")
-    @Order(3)
+    @Tag("regression")
+
     @DisplayName("eliminarAnimalPorCaravana(): debe devolver FALSE si el animal no existe")
     void eliminarAnimalPorCaravana_devuelveFalseSiNoExiste() {
 
@@ -78,8 +74,7 @@ class RegistroServiceTest {
     }
 
     @Test
-    @Tag("unit")
-    @Order(4)
+
     @DisplayName("listarAnimales(): debe devolver una lista independiente")
     void listarAnimales_retornaCopiaIndependiente() {
 
@@ -96,23 +91,24 @@ class RegistroServiceTest {
     // ============================================================
 
     @Test
-    @Tag("unit")
-    @Order(5)
+    @Tag("smoke")
+    @Tag("regression")
+
     @DisplayName("registrarMovimiento(): debe permitir un INGRESO sin validar existencia del animal")
     void registrarMovimiento_ingresoSinAnimal_loAgregaEnLaLista() {
 
         int sizeInicial = service.listarMovimientos().size();
 
-        Movimientos mov = new Movimientos(
-                100, TipoMovimiento.INGRESO, "Compra", "01/01/2025");
+        Movimientos mov = new Movimientos(100, TipoMovimiento.INGRESO, "Compra", "01/01/2025");
 
         assertDoesNotThrow(() -> service.registrarMovimiento(mov));
         assertEquals(sizeInicial + 1, service.listarMovimientos().size());
     }
 
     @Test
-    @Tag("unit")
-    @Order(6)
+    @Tag("smoke")
+    @Tag("regression")
+
     @DisplayName("registrarMovimiento(): SALIDA debe permitirse si el animal existe")
     void registrarMovimiento_salidaConAnimalExistente_funciona() {
 
@@ -120,38 +116,33 @@ class RegistroServiceTest {
 
         service.agregarAnimal(new Animales(20, CategoriaAnimal.VACUNO, "Hereford", 2));
 
-        Movimientos mov = new Movimientos(
-                20, TipoMovimiento.SALIDA, "Venta", "02/02/2025");
+        Movimientos mov = new Movimientos(20, TipoMovimiento.SALIDA, "Venta", "02/02/2025");
 
         assertDoesNotThrow(() -> service.registrarMovimiento(mov));
         assertEquals(initialSize + 1, service.listarMovimientos().size());
     }
 
     @Test
-    @Tag("unit")
-    @Order(7)
+    @Tag("regression")
+
     @DisplayName("registrarMovimiento(): SALIDA debe lanzar error si el animal NO existe")
     void registrarMovimiento_salidaSinAnimal_lanzaError() {
 
-        Movimientos mov = new Movimientos(
-                999, TipoMovimiento.SALIDA, "Error", "10/10/2025");
+        Movimientos mov = new Movimientos(999, TipoMovimiento.SALIDA, "Error", "10/10/2025");
 
-        Exception e = assertThrows(IllegalArgumentException.class,
-                () -> service.registrarMovimiento(mov));
+        Exception e = assertThrows(IllegalArgumentException.class, () -> service.registrarMovimiento(mov));
 
         assertTrue(e.getMessage().contains("does not exist"));
     }
 
     @Test
-    @Tag("unit")
-    @Order(8)
+
     @DisplayName("listarMovimientos(): debe retornar una copia independiente")
     void listarMovimientos_retornaCopiaIndependiente() {
 
         int sizeInicial = service.listarMovimientos().size();
 
-        service.registrarMovimiento(
-                new Movimientos(1, TipoMovimiento.INGRESO, "Destino", "10/10/2025"));
+        service.registrarMovimiento(new Movimientos(1, TipoMovimiento.INGRESO, "Destino", "10/10/2025"));
 
         List<Movimientos> copia = service.listarMovimientos();
         copia.clear();
@@ -164,8 +155,9 @@ class RegistroServiceTest {
     // ============================================================
 
     @Test
-    @Tag("unit")
-    @Order(9)
+    @Tag("smoke")
+    @Tag("regression")
+
     @DisplayName("registrarSanidad(): debe guardar correctamente el registro")
     void registrarSanidad_guardaCorrectamente() {
 
@@ -176,15 +168,12 @@ class RegistroServiceTest {
 
         List<Sanidad> lista = service.listarSanidad();
 
-        assertAll(
-                () -> assertEquals(sizeInicial + 1, lista.size()),
-                () -> assertEquals(s.getVacuna(),
-                        lista.get(lista.size() - 1).getVacuna()));
+        assertAll(() -> assertEquals(sizeInicial + 1, lista.size()),
+                () -> assertEquals(s.getVacuna(), lista.get(lista.size() - 1).getVacuna()));
     }
 
     @Test
-    @Tag("unit")
-    @Order(10)
+
     @DisplayName("listarSanidad(): debe retornar una copia independiente")
     void listarSanidad_retornaCopiaIndependiente() {
 

@@ -1,10 +1,10 @@
 package com.planillarural.service;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.BufferedReader; // lector de archivos de texto
+import java.io.File; // manejo de archivos y directorios
+import java.io.FileReader; //
+import java.io.FileWriter; // escritura de archivos de texto
+import java.io.PrintWriter; //
 import java.util.ArrayList;
 import java.util.List;
 
