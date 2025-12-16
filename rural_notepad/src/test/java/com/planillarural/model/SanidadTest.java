@@ -4,10 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import com.planillarural.model.Sanidad;
 
+@Tag("unit")
+@Tag("smoke")
+@Tag("regression")
 class SanidadTest {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");

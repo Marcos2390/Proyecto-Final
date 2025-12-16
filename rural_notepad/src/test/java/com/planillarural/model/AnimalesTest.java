@@ -1,7 +1,7 @@
 package com.planillarural.model;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;
@@ -16,24 +16,35 @@ import com.planillarural.enums.CategoriaAnimal;
 @Tag("unit")
 class AnimalesTest {
 
+    /*
+     * permite reiniciar el contador estático de IDs antes de cada test,
+     * garantizando que las pruebas sean independientes, deterministas y no dependan
+     * del orden de ejecución/*
+     */
+
+    @BeforeEach
+    void resetSequence() {
+        Animales.resetSequence();
+    }
+
     // =====================================================
     // VALIDACIÓN DE CARAVANA
     // =====================================================
 
     @ParameterizedTest(name = "Caravana válida: {0}")
-    @ValueSource(ints = { 1, 5, 999 })
+    @ValueSource(ints = { 1, 50, 9999 })
     @DisplayName("Crear animal con caravana válida")
     void validCaravansCreateAnimals(int caravana) {
-        Animales a = new Animales(caravana, CategoriaAnimal.TORO, "Hereford", 2);
+        Animales a = new Animales(caravana, CategoriaAnimal.VACA, "RED ANGUS", 3);
 
         assertAll("Validación de atributos",
                 () -> assertEquals(caravana, a.getNumerocaravana(), "La caravana debe coincidir"),
-                () -> assertEquals("Hereford", a.getRaza(), "La raza debe coincidir"),
+                () -> assertEquals("RED ANGUS", a.getRaza(), "La raza debe coincidir"),
                 () -> assertTrue(a.getEdad() >= 0, "La edad no puede ser negativa"));
     }
 
     @Test
-    @Tag("unit")
+
     @Tag("smoke")
     @DisplayName("Caravana inválida lanza excepción")
     void invalidCaravanThrowsException() {
@@ -58,7 +69,7 @@ class AnimalesTest {
     // ID AUTOINCREMENTAL
     // =====================================================
 
-    @RepeatedTest(3)
+    @RepeatedTest(3) // repetir para asegurar el comportamiento
     @DisplayName("ID autoincremental funciona correctamente")
     void idAutoIncrements() {
         Animales a1 = new Animales(100, CategoriaAnimal.TORO, "A", 1);
@@ -73,9 +84,9 @@ class AnimalesTest {
 
     @Test
     @DisplayName("Equals y hashCode comparan por número de caravana")
-    void equalsWorksByCaravanNumber() {
-        Animales a1 = new Animales(50, CategoriaAnimal.TORO, "ANGUS", 1);
-        Animales a2 = new Animales(50, CategoriaAnimal.OVEJA, "MERINO", 3);
+    void equalsWorksByCaravanNumber() { //
+        Animales a1 = new Animales(32, CategoriaAnimal.NOVILLO, "ANGUS", 3);
+        Animales a2 = new Animales(32, CategoriaAnimal.CORDERO, "CORRIDALE", 1);
 
         assertAll("Comparación por caravana",
                 () -> assertEquals(a1, a2, "Animales con misma caravana deben ser iguales"),

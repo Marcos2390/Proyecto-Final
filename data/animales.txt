@@ -1,0 +1,4 @@
+1,23,EQUINO,moro,3
+2,23,PORCINO,picorel,3
+3,45,CAPRINO,23,2
+4,67,VACUNO - TERNERO,braford,0

@@ -16,7 +16,7 @@ import com.planillarural.model.Movimientos;
 import com.planillarural.model.Sanidad;
 
 @Tag("regression")
-@Tag("Smoke")
+@Tag("smoke")
 @DisplayName("RegistroService - Unit Tests")
 class RegistroServiceTest {
 

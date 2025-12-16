@@ -22,6 +22,13 @@ public class Animales {
         this.edad = Math.max(0, edad); // en caso de numero negativo devuelve 0
     }
 
+    // =========================
+    // SOLO PARA TESTING
+    // =========================
+    public static void resetSequence() {
+        sequence = 1;
+    }
+
     // getters
     public int getId() {
         return id;
